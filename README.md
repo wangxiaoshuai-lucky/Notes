@@ -1,5 +1,5 @@
 # 春招知识点准备  
-## Java基础： 
+## [Java基础](./docs/java/README.md)： 
 * 集合容器以及底层实现原理  
     * List
         * ArrayList
@@ -23,16 +23,18 @@
 * 反射机制和内省机制  
 * java的序列化
 
-## JVM相关知识点
+## [JVM相关知识点](./docs/jvm/README.md)
 * java内存模型：工作内存和主内存
-* 内存结构及其作用
+* java对象存储模型
+* java内存结构及各个区域的作用
+* 什么时候触发哪种类别的GC
 * GC的算法
     * 新生代、老年代、永久代
 * 类加载机制
     * 各个阶段（7个阶段）的工作流程
     * 双亲委派模式  
 
-## 多线程、锁
+## [多线程、锁](./docs/lock/README.md)
 * 线程池
     * 使用好处
     * 实现原理（线程复用、管理线程）
@@ -54,21 +56,14 @@
 * 独占锁（ReentrantLock）的实现原理
 * 共享锁（ReentrantReadWriteLock）的实现原理
 
-## spring框架的理解
+## [ssm框架](./docs/framework/README.md)
 * IOC和DI的原理和源码分析
 * AOP的实现原理
 * Autowired的注入过程
-
-## springMvc的实现原理
-* 接口地址和方法的映射过程
-* @ResponseBody的处理
-* @RequestMapping的处理
-
-## Mybatis
-* sql语句和方法的映射原理
-* \#｛｝ 和 \$｛｝的区别
-
-## mysql（InnoDB）
+## [mysql（InnoDB）](./docs/mysql/README.md)
+* 数据库ACID
+* 事务的隔离级别
+* 事务的传播行为
 * 存储方式
     * .frm文件
     * .idb文件
