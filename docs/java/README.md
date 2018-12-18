@@ -7,7 +7,10 @@
 * HashSet
 * LinkedHashSet
 * TreeSet
-* HashMap
+* HashMap  
+计算方法：hashcode和本身右移16位的异或运算  
+如果这个槽位中节点的个数多于8个，那么将这个槽位的链表转换成红黑树  
+
 * LinkedHashMap
 * TreeMap
 ### String类相关知识点

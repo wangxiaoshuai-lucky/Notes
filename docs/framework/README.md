@@ -7,7 +7,8 @@
 * 接口地址和方法的映射过程
 * @ResponseBody的处理
 * @RequestMapping的处理
-
+* spring管理的bean的模式，默认原型
+* spring如何管理bean、bean的生命周期
 [spring框架的学习](https://github.com/1510460325/springframework/blob/master/README.md)
 ## Mybatis
 * sql语句和方法的映射原理
