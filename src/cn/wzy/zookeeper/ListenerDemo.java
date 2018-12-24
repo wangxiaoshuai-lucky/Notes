@@ -23,6 +23,61 @@ public class ListenerDemo implements Watcher {
 	private static final List<Subscriber> subscribers = new ArrayList<>();
 	private CountDownLatch latch = new CountDownLatch(1);
 
+	@Override
+	public void process(WatchedEvent watchedEvent) {
+		if (watchedEvent.getState().equals(Event.KeeperState.SyncConnected)) {
+			//init done
+			latch.countDown();
+		} else if (watchedEvent.getState().equals(Event.KeeperState.Disconnected)) {
+			System.out.println("Disconnected!");
+		}
+		//foreach
+		synchronized (subscribers) {
+			for (Subscriber subscribe : subscribers) {
+				if (subscribe.target().equals(watchedEvent.getPath())) {
+					try {
+						//listening again
+						String data = new String(zooKeeper.getData(watchedEvent.getPath(),true,null),"utf-8");
+						subscribe.process(watchedEvent,data);
+					} catch (KeeperException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * command : get path watch
+	 */
+	public boolean addSubscriber(Subscriber subscriber) {
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return false;
+		}
+		//add a subscriber
+		synchronized (subscribers) {
+			subscribers.add(subscriber);
+		}
+		try {
+			//start listener
+			zooKeeper.getData(subscriber.target(), true, null);
+		} catch (KeeperException e) {
+			e.printStackTrace();
+			return false;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * command : get path
 	 */
@@ -54,11 +109,11 @@ public class ListenerDemo implements Watcher {
 	}
 
 	/**
-	 * command : create path data
+	 * command : create path data [createMode]
 	 */
-	public static String create(String znode, String data) {
+	public static String create(String znode, String data, CreateMode createMode) {
 		try {
-			return zooKeeper.create(znode, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+			return zooKeeper.create(znode, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, createMode);
 		} catch (KeeperException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -72,7 +127,7 @@ public class ListenerDemo implements Watcher {
 	 */
 	public static Stat exists(String znode, boolean watch) {
 		try {
-			zooKeeper.exists(znode, true);
+			zooKeeper.exists(znode, watch);
 		} catch (KeeperException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -94,64 +149,8 @@ public class ListenerDemo implements Watcher {
 		}
 	}
 
-	/**
-	 * command : get path watch
-	 */
-	public boolean addSubscriber(Subscriber subscriber) {
-		try {
-			latch.await();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return false;
-		}
-		//add a subscriber
-		synchronized (subscribers) {
-			subscribers.add(subscriber);
-		}
-		try {
-			//start listener
-			zooKeeper.getData(subscriber.target(), true, null);
-		} catch (KeeperException e) {
-			e.printStackTrace();
-			return false;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public void process(WatchedEvent watchedEvent) {
-		if (watchedEvent.getState().equals(Event.KeeperState.SyncConnected)) {
-			//init done
-			latch.countDown();
-		} else if (watchedEvent.getState().equals(Event.KeeperState.Disconnected)) {
-			System.out.println("Disconnected!");
-		}
-		//foreach
-		synchronized (subscribers) {
-			for (Subscriber subscribe : subscribers) {
-				if (subscribe.target().equals(watchedEvent.getPath())) {
-					try {
-						//listening again
-						String data = new String(zooKeeper.getData(watchedEvent.getPath(),true,null),"utf-8");
-						subscribe.process(watchedEvent,data);
-					} catch (KeeperException e) {
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
-
-
 	public ListenerDemo(String url, Integer timeOut) throws IOException {
-		zooKeeper = new ZooKeeper(url, 500, this);
+		zooKeeper = new ZooKeeper(url, timeOut, this);
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
@@ -169,7 +168,7 @@ public class ListenerDemo implements Watcher {
 		});
 		System.out.println(res);
 		while (true) {
-			set("/config/aaa/bbb",System.currentTimeMillis() + "",-1);
+//			set("/config/aaa/bbb",System.currentTimeMillis() + "",-1);
 			Thread.sleep(2000);
 		}
 	}
