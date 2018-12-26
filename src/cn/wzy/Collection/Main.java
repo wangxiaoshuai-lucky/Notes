@@ -1,7 +1,10 @@
 package cn.wzy.Collection;
 
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Main {
 
@@ -35,10 +38,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		TreeSet<Integer> set = new TreeSet();
-		set.add(123);
-
-		TreeMap<Integer,Integer> map = new TreeMap<>();
-		map.put(1,12);
+		ConcurrentHashMap<String, Integer> hashMap = new ConcurrentHashMap<>();
+		hashMap.put("asdf",11);
+		hashMap.size();
 	}
 }
