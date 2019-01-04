@@ -75,8 +75,17 @@ take和push为阻塞方法！
 内部有一个双向队列，一个全局锁和两个信号（空，满）  
 当获取时如果没有，唤醒被满信号量阻塞的生产者，自己阻塞  
 当添加的时候满了，唤醒被空信号量阻塞的消费者，自己阻塞  
+* add 和 pop如果队列满了或者空了报错
+* put 和 take如果队列满了或者空了报错阻塞线程  
 ### ConcurrentHashMap实现原理
 * jdk1.7为分段锁，即把一个hashMap分成很多个小的HashMap那么每个锁管理一个小的hashMap，并发数就高了！  
 * jdk1.8采用锁住当前槽位头节点，如果头结点为空，那么cas设置，如果失败，说明头结点有位置了，那么锁住，放心操作！  
-* size的求法，在put的时候如果cas添加baseCount失败，那么hash一下加入到CounterCell的某一位置的值上，
+* size的求法，在put的时候如果cas添加baseCount失败，那么hash一下采用cas加入到CounterCell的某一位置的值上，
 求size的时候返回baseCount+CounterCell的求和结果。
+* putIfAbsent方法：底层采用putVal(k,v,onlyAbsent = true)在插入的时候检测是否已经存在
+### CountDownLatch闭锁(基于共享锁AQS)
+* await方法：如果state大于0继续访问，否则加入队列等待
+* countDown方法：让state-1，并且唤醒队首自旋获取锁
+### Semaphore（基于共享锁AQS）
+* acquire方法：设置state减少，如果大于0继续访问，否则加入队列等待
+* release方法：让state-1，并且唤醒队首自旋获取锁
