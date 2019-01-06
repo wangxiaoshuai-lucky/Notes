@@ -84,8 +84,10 @@ take和push为阻塞方法！
 求size的时候返回baseCount+CounterCell的求和结果。
 * putIfAbsent方法：底层采用putVal(k,v,onlyAbsent = true)在插入的时候检测是否已经存在
 ### CountDownLatch闭锁(基于共享锁AQS)
-* await方法：如果state大于0继续访问，否则加入队列等待
+当前的state代表的是剩余的阻碍，所以等于0才能往下   
+* await方法：如果state=0继续访问，否则加入队列等待
 * countDown方法：让state-1，并且唤醒队首自旋获取锁
 ### Semaphore（基于共享锁AQS）
-* acquire方法：设置state减少，如果大于0继续访问，否则加入队列等待
-* release方法：让state-1，并且唤醒队首自旋获取锁
+当前的state代表的是剩余的资源，所以大于0才能往下  
+* acquire方法：设置state减少，如果剩下的state大于0继续访问，否则加入队列等待
+* release方法：让state+1，并且唤醒队首自旋获取锁
