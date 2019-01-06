@@ -72,7 +72,8 @@ condition让出锁阻塞等待相当于放掉锁资源待唤醒的时候再次�
 每个condition中有一个阻塞队列，当唤醒的时候将这个加点移到AQS的队列上再次获得锁。
 signal移动队首，signalAll移动所有节点
 ### 读写锁（ReentrantReadWriteLock）的实现原理
-读锁、写锁共用一个同步器：低位存写锁，高位存读锁；  
+读锁、写锁共用一个同步器（也就是共用一个state）：state低位存写锁，高位存读锁个数；  
+注意：当前线程是写锁的时候也能获取读锁  
 关键是存储读写锁的数量、和读写锁重入的次数
 ### LinkedBlockingDeque实现原理
 take和push为阻塞方法！  
