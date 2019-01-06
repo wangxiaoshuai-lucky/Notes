@@ -66,7 +66,11 @@ worker的任务就是不断从队列里面拉去任务，然后执行任务的ru
 ***释放锁过程***：cas归还资源，唤醒下一个有效的等待线程，设置为head  
 [AQS](https://github.com/1510460325/MultiThread/blob/master/README.md)
 ### 独占锁（ReentrantLock）的实现原理
-和上述是一样的  
+state代表独占当前线程数，所以当state为0时可用，否则加入等待队列阻塞等待
+### Condition的实现原理
+condition让出锁阻塞等待相当于放掉锁资源待唤醒的时候再次争夺锁，
+每个condition中有一个阻塞队列，当唤醒的时候将这个加点移到AQS的队列上再次获得锁。
+signal移动队首，signalAll移动所有节点
 ### 读写锁（ReentrantReadWriteLock）的实现原理
 读锁、写锁共用一个同步器：低位存写锁，高位存读锁；  
 关键是存储读写锁的数量、和读写锁重入的次数
@@ -91,3 +95,6 @@ take和push为阻塞方法！
 当前的state代表的是剩余的资源，所以大于0才能往下  
 * acquire方法：设置state减少，如果剩下的state大于0继续访问，否则加入队列等待
 * release方法：让state+1，并且唤醒队首自旋获取锁
+### CyclicBarrier(lock实现)
+每个线程获取lock让当前屏障的值减一，当为零唤醒所有线程继续往下（获得锁，释放锁），
+否则wait阻塞起来等待被唤醒。

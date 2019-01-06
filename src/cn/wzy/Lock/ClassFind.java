@@ -3,13 +3,15 @@ package cn.wzy.Lock;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ClassFind {
 	/**
 	 * java 常用并发类
 	 * @param args
 	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
 		/**
 		 * 1.ConcurrentHashMap
 		 */
@@ -37,5 +39,13 @@ public class ClassFind {
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 		countDownLatch.await();
 		countDownLatch.countDown();
+		/**
+		 * 5.CyclicBarrier
+		 */
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
+		cyclicBarrier.await();
+		ReentrantLock lock = new ReentrantLock();
+		Condition condition = lock.newCondition();
+		condition.signal();
 	}
 }
