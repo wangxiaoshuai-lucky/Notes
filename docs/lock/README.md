@@ -84,6 +84,9 @@ take和push为阻塞方法！
 当添加的时候满了，唤醒被空信号量阻塞的消费者，自己阻塞  
 * add 和 pop如果队列满了或者空了报错
 * put 和 take如果队列满了或者空了报错阻塞线程  
+### linkedBlockingQueue
+与LinkedBlockingDeque类似  
+区别：前后两端采用不同的锁来同步，size的控制设置为原子类的自旋自增。
 ### ConcurrentHashMap实现原理
 * jdk1.7为分段锁，即把一个hashMap分成很多个小的HashMap那么每个锁管理一个小的hashMap，并发数就高了！  
 * jdk1.8采用锁住当前槽位头节点，如果头结点为空，那么cas设置，如果失败，说明头结点有位置了，那么锁住，放心操作！  

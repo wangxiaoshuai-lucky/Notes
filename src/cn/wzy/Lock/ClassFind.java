@@ -23,8 +23,6 @@ public class ClassFind {
 		 * 2.LinkedBlockingDeque
 		 */
 		LinkedBlockingDeque<Integer> linkedBlockingDeque = new LinkedBlockingDeque(15);
-		linkedBlockingDeque.add(12);
-		linkedBlockingDeque.pop();
 		linkedBlockingDeque.put(12);
 		linkedBlockingDeque.take();
 		/**
@@ -44,8 +42,11 @@ public class ClassFind {
 		 */
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(5);
 		cyclicBarrier.await();
-		ReentrantLock lock = new ReentrantLock();
-		Condition condition = lock.newCondition();
-		condition.signal();
+		/**
+		 * 6.LinkedBlockingQueue
+		 */
+		LinkedBlockingQueue<Integer> linkedBlockingQueue = new LinkedBlockingQueue<>();
+		linkedBlockingQueue.put(23);
+		linkedBlockingQueue.take();
 	}
 }
