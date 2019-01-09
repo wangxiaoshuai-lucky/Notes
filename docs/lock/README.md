@@ -22,7 +22,7 @@ worker的任务就是不断从队列里面拉去任务，然后执行任务的ru
 4.DiscardOldestPolicy：工作队列头部的任务将被删除，然后重试加入此任务。
 ### 竞态条件（race condition）：  
 是指设备或系统出现不恰当的执行时序，而得到不正确的结果。  
-### 检测一个线程是否拥有锁  
+### 检测线程是否拥有锁  
 在java.lang.Thread中有一个方法叫holdsLock(obj)，它返回true如果当且仅当当前线程拥有某个具体对象的锁。  
 ### 锁分类
 * 悲观锁/乐观锁  
@@ -52,7 +52,7 @@ worker的任务就是不断从队列里面拉去任务，然后执行任务的ru
 * synchronized不支持超时放弃
 * synchronized是不公平锁
 * synchronized是原生java底层实现，而lock是一个并发类
-### synchronized的锁
+### synchronized锁升级
 重量级锁：对应于操作系统的mutex互斥锁  
 * 对象头信息中有关标志位 
 * 锁升级过程
@@ -84,7 +84,7 @@ take和push为阻塞方法！
 当添加的时候满了，唤醒被空信号量阻塞的消费者，自己阻塞  
 * add 和 pop如果队列满了或者空了报错
 * put 和 take如果队列满了或者空了报错阻塞线程  
-### linkedBlockingQueue
+### linkedBlockingQueue实现原理
 与LinkedBlockingDeque类似  
 区别：前后两端采用不同的锁来同步，size的控制设置为原子类的自旋自增。
 ### ConcurrentHashMap实现原理
