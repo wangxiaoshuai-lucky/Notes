@@ -1,4 +1,4 @@
-# 春招知识点准备  
+# Java后台-基础知识点整理  
 ## [Java基础](./docs/java/README.md)： 
 * 集合容器以及底层实现原理  
 * String类 
@@ -34,6 +34,7 @@
 * volatile关键字
 * synchronized关键字和Lock的使用区别
 * synchronized锁升级
+* synchronized锁的底层原理
 * AQS的实现原理
 * 独占锁（ReentrantLock）的实现原理
 * Condition的实现原理
@@ -70,11 +71,14 @@
 * 索引实现原理（B+树）
 * 自适应哈希
 ## [zookeeper相关知识点](./docs/zookeeper/README.md)
+* 概述
 * 监听机制
 * 节点读写的原子性
 * 读写操作过程
 * 选举过程
 * zookeeper实现分布式锁
+## Kafka
+* Kafka概述、功能、场景
 ## [计算机网络](./docs/ComputerNet/README.md)
 * 冯诺依曼体系结构
 * OSI 7层模型
