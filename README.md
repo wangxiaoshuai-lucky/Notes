@@ -77,8 +77,15 @@
 * 读写操作过程
 * 选举过程
 * zookeeper实现分布式锁
-## Kafka
+## [Kafka](./docs/kafka/README.md)
 * Kafka概述、功能、场景
+    * 概述
+    * 功能
+    * 场景
+* broker及其作用
+* 控制器Controller
+* ISR
+* 发送消息流程
 ## [计算机网络](./docs/ComputerNet/README.md)
 * 冯诺依曼体系结构
 * OSI 7层模型
