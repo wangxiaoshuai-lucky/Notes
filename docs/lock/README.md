@@ -20,6 +20,10 @@ worker的任务就是不断从队列里面拉去任务，然后执行任务的ru
 2.AbortPolicy：处理程序遭到拒绝将抛出运行时 RejectedExecutionException  
 3.DiscardPolicy：不能执行的任务将被删除，不报错  
 4.DiscardOldestPolicy：工作队列头部的任务将被删除，然后重试加入此任务。
+### ScheduledThreadPoolExecutor实现原理
+运作在ThreadPoolExecutor的基础上，自定义实现任务队列，每次take()拉取任务的时候，检测返回队首元素：采用优先队列算法对任务排队，
+根据每个任务有的执行时间点，如果时间点已经过了（delay<0），那么优先级最高,如果队首的时间点（delay）>0,
+那么表示最近的执行任务都是需要延迟的，所以休眠delay的时间，休眠采用的是Lock的condition。
 ### 竞态条件（race condition）：  
 是指设备或系统出现不恰当的执行时序，而得到不正确的结果。  
 ### 检测线程是否拥有锁  
