@@ -57,3 +57,8 @@ String a = "abc";字符串是存到方法区
 * try 块：用于捕获异常。其后可接零个或多个catch块，如果没有catch块，则必须跟一个finally块。
 * catch 块：用于处理try捕获到的异常。
 * finally 块：无论是否捕获或处理异常，finally块里的语句都会被执行。当在try块或catch块中遇到return语句时，finally语句块将在方法返回之前被执行。
+### 引用
+* 强引用：new Object()，引用的目标永远不会被GC
+* 软引用：jvm在内存溢出之前才会清理掉这块内存
+* 弱引用：存活一个GC期间，下次gc回收
+* 虚引用：在gc回收的时候收到一个系统通知
