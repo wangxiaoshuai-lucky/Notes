@@ -82,6 +82,7 @@
 * 读写操作过程
 * 选举过程
 * zookeeper实现分布式锁
+* 分布式事务解决方案
 ## [Kafka](./docs/kafka/README.md)
 * Kafka概述、功能、场景
     * 概述
