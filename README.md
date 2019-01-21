@@ -75,6 +75,7 @@
 * 索引分类
 * 索引实现原理（B+树）
 * 自适应哈希
+* 数据库优化
 ## [zookeeper相关知识点](./docs/zookeeper/README.md)
 * 概述
 * 监听机制
