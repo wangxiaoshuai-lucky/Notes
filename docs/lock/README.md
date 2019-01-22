@@ -25,6 +25,15 @@ worker的任务就是不断从队列里面拉去任务，然后执行任务的ru
 2.AbortPolicy：处理程序遭到拒绝将抛出运行时 RejectedExecutionException  
 3.DiscardPolicy：不能执行的任务将被删除，不报错  
 4.DiscardOldestPolicy：工作队列头部的任务将被删除，然后重试加入此任务。
+* 空闲线程超时结束
+getTask()中如果是设置了timeOut：是workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS)来获取任务，
+当一定时间没有获取任务的时候，会返回null，工作线程就会跳出循环，结束当前线程。
+* 线程池参数  
+corePoolSize：核心线程数  
+maxPoolSize：最大线程数  
+keepAliveTime：线程空闲时间  
+allowCoreThreadTimeout：允许核心线程超时  
+rejectedExecutionHandler：任务拒绝处理器    
 ### ScheduledThreadPoolExecutor实现原理
 运作在ThreadPoolExecutor的基础上，自定义实现任务队列，每次take()拉取任务的时候，检测返回队首元素：采用优先队列算法对任务排队，
 根据每个任务有的执行时间点，如果时间点已经过了（delay<0），那么优先级最高,如果队首的时间点（delay）>0,
