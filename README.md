@@ -79,6 +79,8 @@
 * 自适应哈希
 * 数据库优化
 * MyISAM和InnoDB对比
+* MVCC机制
+* 快照读和当前读
 ## [zookeeper相关知识点](./docs/zookeeper/README.md)
 * 概述
 * 监听机制
