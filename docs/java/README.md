@@ -62,3 +62,6 @@ String a = "abc";字符串是存到方法区
 * 软引用：jvm在内存溢出之前才会清理掉这块内存
 * 弱引用：存活一个GC期间，下次gc回收
 * 虚引用：在gc回收的时候收到一个系统通知
+### switch只能用int和枚举，String
+* swtich（）里面必须是int和enum--即枚举类型。 short、 char 或者 byte他会自动转换为int， long不能自动转换为int..
+* String可以看成枚举类型
