@@ -22,8 +22,10 @@ Java 程序在执行子类的构造方法之前，如果没有用 super() 来调
 初始化一个LinkedHashMap，跟HashSet一样存储  
 * TreeMap  
 红黑树存储节点  
-* TreeSet 
+* TreeSet  
 内部有一个TreeMap
+* Collections.sort底层排序方式  
+排序方式为Timsort：将数组划分为若干的升序降序区间（run）入栈，最后将栈不断融合直至一个元素。
 ### String类相关知识点
 * 存储方式  
 new String("abc")数据存到堆内存  
