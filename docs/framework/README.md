@@ -1,6 +1,10 @@
 ## spring框架的理解
 * IOC和DI的原理和源码分析
-* AOP的实现原理
+* AOP的实现原理  
+    * jdk动态代理  
+    动态生成代理类，然后加载到jvm中
+    * CGLIB动态代理
+    继承需要代理的对象，所以只能代理可重写方法（不能代理final，以及private方法）
 * 事务的实现、传播行为
 * spring管理的bean的模式，默认单例
 * spring如何管理bean、bean的生命周期
