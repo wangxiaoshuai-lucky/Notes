@@ -1,20 +1,28 @@
 package cn.wzy.Collection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 	public static void main(String[] args) {
-		float a = 1;
-		a = a + 1;
-		System.out.println(a);
-//		System.out.println("ans is : " + ans());
-	}
-
-	public static int ans(){
-		try {
-			int a = 12 / 0;
-			return 1;
-		} finally {
-			System.out.println("finally.");
-			return 3;
+		List<Integer> primary = new ArrayList<>();
+		primary.add(2);
+		primary.add(3);
+		int n = 1000;
+		for (int i = 4; i <= n; i++) {
+			boolean isPrimary = true;
+			for (Integer j: primary) {
+				if (i % j == 0) {
+					isPrimary = false;
+					break;
+				}
+			}
+			if (isPrimary) {
+				primary.add(i);
+			}
+		}
+		for (Integer i: primary) {
+			System.out.print(i + ",");
 		}
 	}
 }
