@@ -1,28 +1,15 @@
 package cn.wzy.Collection;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
 	public static void main(String[] args) {
-		List<Integer> primary = new ArrayList<>();
-		primary.add(2);
-		primary.add(3);
-		int n = 1000;
-		for (int i = 4; i <= n; i++) {
-			boolean isPrimary = true;
-			for (Integer j: primary) {
-				if (i % j == 0) {
-					isPrimary = false;
-					break;
-				}
-			}
-			if (isPrimary) {
-				primary.add(i);
-			}
-		}
-		for (Integer i: primary) {
-			System.out.print(i + ",");
-		}
+		/**
+		 * Integer 会缓存 -127~127的数
+		 */
+		Integer a = 500;//相当于Integer.valueOf(500)
+		Integer b = 500;
+		System.out.println(a == b);
+		Integer c = 120;
+		Integer d = 120;
+		System.out.println(c == d);
 	}
 }
