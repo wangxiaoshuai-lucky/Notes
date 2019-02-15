@@ -14,7 +14,7 @@
 * switch只能用int和枚举，String
 * 编译型语言与解释型语言
 ## [JVM相关知识点](./docs/jvm/README.md)
-* java内存模型：工作内存和主内存
+* JMM及8个原子操作
 * java对象存储模型
 * java内存结构及各个区域的作用
 * 什么时候触发哪种类别的GC
