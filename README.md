@@ -10,6 +10,9 @@
 * java的序列化  
 * 伪共享问题
 * Java 中的异常处理
+* 引用
+* switch只能用int和枚举，String
+* 编译型语言与解释型语言
 ## [JVM相关知识点](./docs/jvm/README.md)
 * java内存模型：工作内存和主内存
 * java对象存储模型

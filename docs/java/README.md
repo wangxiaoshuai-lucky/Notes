@@ -69,3 +69,6 @@ String a = "abc";字符串是存到方法区
 ### switch只能用int和枚举，String
 * swtich（）里面必须是int和enum--即枚举类型。 short、 char 或者 byte他会自动转换为int， long不能自动转换为int..
 * String可以看成枚举类型
+### 编译型语言与解释型语言
+* 编译型语言：有编译过程的语言，将代码编译成机器码，如c/c++
+* 解释型语言：程序代码是运行过程中翻译成机器语言，java是jvm动态翻译的
