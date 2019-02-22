@@ -48,5 +48,12 @@ public class ClassFind {
 		LinkedBlockingQueue<Integer> linkedBlockingQueue = new LinkedBlockingQueue<>();
 		linkedBlockingQueue.put(23);
 		linkedBlockingQueue.take();
+		/**
+		 * 7. Lock
+		 */
+		ReentrantLock lock = new ReentrantLock();
+		Condition condition = lock.newCondition();
+		lock.lock();
+		condition.await();
 	}
 }
