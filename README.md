@@ -86,6 +86,12 @@
 * MyISAM和InnoDB对比
 * MVCC机制
 * 快照读和当前读
+## [redis](./docs/redis/redis.md)
+* 5中数据结构(string, list, set, hash, zset)
+* redis持久化（RDB、AOF）
+* zset的数据结构
+* setnx实现分布式锁
+* 相邻运行（不保证原子性）
 ## [zookeeper相关知识点](./docs/zookeeper/README.md)
 * 概述
 * 监听机制
