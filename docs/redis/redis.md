@@ -1,3 +1,4 @@
+## redis知识点
 ### 5中数据结构(string, list, set, hash, zset)
 * string： 字符串类型
 * list：链表类型

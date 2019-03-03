@@ -109,6 +109,11 @@
 * 控制器Controller
 * ISR
 * 发送消息流程
+## [分布式场景下的部分概念](./docs/distribute/distribute.md)
+* 服务器降级
+* 缓存穿透
+* 缓存雪崩
+* 缓存击穿
 ## [计算机网络](./docs/ComputerNet/README.md)
 * 冯诺依曼体系结构
 * OSI 7层模型
