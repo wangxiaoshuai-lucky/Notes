@@ -2,6 +2,7 @@
 ## [Java基础](./docs/java/README.md)
 * 内存泄露、内存溢出 
 * 函数重载、重写
+* 什么是泛型？
 * Java中是否可以覆盖(override)一个private或者是static的方法？
 * 定义一个空参数的构造方法的作用
 * 集合容器以及底层实现原理  
