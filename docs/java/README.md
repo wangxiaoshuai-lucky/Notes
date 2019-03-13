@@ -7,6 +7,31 @@ ThreadLocal变量没有及时remove会造成内存泄露.
 ### 函数重载、重写
 ***重载***：发生在同一个类中，方法名必须相同，参数类型不同、个数不同、顺序不同，方法返回值和访问修饰符可以不同，不能只有函数返回值类型不同  
 ***重写***：发生在父子类中，方法名、参数列表必须相同，返回值范围小于等于父类，抛出的异常范围小于等于父类，访问修饰符范围大于等于父类；如果父类方法访问修饰符为 private 则子类就不能重写该方法。
+### Java中是否可以覆盖(override)一个private或者是static的方法？
+* private: 父类对子类不可见，相当于是新添一个方法，不冲突，并不算是覆盖
+* static：父类的static方法是在父类层次上，两个不冲突，就看引用是什么类型了，如果是父类则调用父类方法，如果是子类就调用子类方法
+~~~
+public class Base {
+	private Base next;
+	static void say(){
+		System.out.println("base");
+	}
+}
+public class Child extends Base {
+	private Base next;
+	static void say(){
+		System.out.println("child");
+	}
+}
+public class Main {
+	public static void main(String[] args) {
+		Child child = new Child();
+		((Base)child).say();//bases
+		(child).say();//child
+	}
+}
+~~~
+同时不可见的成员变量也是可以的。
 ### 定义一个空参数的构造方法的作用
 Java 程序在执行子类的构造方法之前，如果没有用 super() 来调用父类特定的构造方法，则会调用父类中“没有参数的构造方法”。因此，如果父类中只定义了有参数的构造方法，而在子类的构造方法中又没有用 super() 来调用父类中特定的构造方法，则编译时将发生错误，因为 Java 程序在父类中找不到没有参数的构造方法可供执行。解决办法是在父类里加上一个不做事且没有参数的构造方法。 
 ### 集合容器以及底层实现原理  
