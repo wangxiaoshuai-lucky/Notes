@@ -7,63 +7,75 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 public class NIOClient {
 
-	private static int flag = 1;
-	private static ByteBuffer inBuffer = ByteBuffer.allocate(1024);
-	private static ByteBuffer outBuffer = ByteBuffer.allocate(1024);
-	private final static InetSocketAddress address = new InetSocketAddress("127.0.0.1", 7777);
+	private static ByteBuffer buffer = ByteBuffer.allocate(1024);
+	private final static InetSocketAddress address = new InetSocketAddress("120.77.151.141", 7777);
 
+	static private String rec(SocketChannel channel) throws IOException {
+		buffer.clear();
+		int count = channel.read(buffer);
+		return new String(buffer.array(),0,count);
+	}
 
+	static private void write(SocketChannel channel, String content) throws IOException {
+		buffer.clear();
+		buffer.put(content.getBytes());
+		buffer.flip();
+		channel.write(buffer);
+	}
+
+	private static volatile boolean success = false;
 	public static void main(String[] args) throws IOException {
-		SocketChannel socketChannel = SocketChannel.open();
-		socketChannel.configureBlocking(false);
 		Selector selector = Selector.open();
-		socketChannel.register(selector, SelectionKey.OP_CONNECT);
-		socketChannel.connect(address);
-
-
-		while (true) {
-			selector.select();
-			Set<SelectionKey> set = selector.selectedKeys();
-			Iterator<SelectionKey> iterator = set.iterator();
-			SocketChannel client;
-			int count;
-			while (iterator.hasNext()) {
-				SelectionKey key = iterator.next();
-				if (key.isConnectable()) {
-					client = ((SocketChannel) key.channel());
-					client.configureBlocking(false);
-					if (client.isConnectionPending()) {
-						client.finishConnect();
-						outBuffer.clear();
-						outBuffer.put("hello".getBytes());
-						outBuffer.flip();
-						client.write(outBuffer);
+		SocketChannel socketChannel = SocketChannel.open(address);
+		socketChannel.configureBlocking(false);
+		socketChannel.register(selector, SelectionKey.OP_READ);
+		new Thread(()->{
+			SocketChannel client = null;
+			try {
+				while (true) {
+					selector.select();
+					Set<SelectionKey> set = selector.selectedKeys();
+					Iterator<SelectionKey> iterator = set.iterator();
+					while (iterator.hasNext()) {
+						SelectionKey key = iterator.next();
+						iterator.remove();
+						if (key.isReadable()) {
+							client = ((SocketChannel) key.channel());
+							String msg = rec(client);
+							if (msg.contains("hello"))
+								success = true;
+							System.out.println(msg);
+							key.interestOps(SelectionKey.OP_READ);
+						}
 					}
-					client.register(selector, SelectionKey.OP_READ);
-				} else if (key.isReadable()) {
-					client = ((SocketChannel) key.channel());
-					inBuffer.clear();
-					count = client.read(inBuffer);
-					if (count > 0) {
-						inBuffer.flip();
-						System.out.println(new String(inBuffer.array(), 0, count, "utf-8"));
-						client.register(selector, SelectionKey.OP_WRITE);
+					set.clear();
+				}
+			} catch (Exception e){
+				if (client != null) {
+					try {
+						client.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
-				} else if (key.isWritable()) {
-					client = ((SocketChannel) key.channel());
-					outBuffer.clear();
-					System.out.print("发送数据:");
-					outBuffer.put(("send msg " + flag++).getBytes());
-					outBuffer.flip();
-					client.write(outBuffer);
-					client.register(selector, SelectionKey.OP_READ);
 				}
 			}
-			set.clear();
+		}).start();
+		Scanner scanner = new Scanner(System.in);
+		String name = null;
+		while(true) {
+			name = scanner.next();
+			if (success)
+				break;
+			write(socketChannel,name);
+		}
+		while (scanner.hasNext()) {
+			String msg = scanner.next();
+			write(socketChannel,name + "###" + msg);
 		}
 	}
 }
