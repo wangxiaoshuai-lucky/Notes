@@ -1,6 +1,8 @@
 package cn.wzy.Collection;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static java.lang.Math.min;
@@ -34,8 +36,5 @@ public class Main {
 
 	public static void main(String[] args) {
 		System.out.println(ans(7));
-		ArrayList<String> list = new ArrayList<>();
-		CopyOnWriteArraySet<String> set = new CopyOnWriteArraySet<>();
-		set.add("asdf");
 	}
 }
