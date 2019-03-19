@@ -60,6 +60,17 @@ Java 程序在执行子类的构造方法之前，如果没有用 super() 来调
 内部有一个TreeMap
 * Collections.sort底层排序方式  
 排序方式为Timsort：将数组划分为若干的升序降序区间（run）入栈，最后将栈不断融合直至一个元素。
+### 哪些是线程安全的集合
+* 列表：
+    * vector：所有操作加锁
+    * stack：继承vector
+    * CopyOnWriteArrayList：操作副本
+    * ArrayBlockingQueue：阻塞队列
+* map：
+    * hashtable：所有操作加锁
+    * ConcurrentHashMap：分段锁
+* Set：
+    * CopyOnWriteArraySet：内部有一个CopyOnWriteArrayList
 ### String类相关知识点
 * 存储方式  
 new String("abc")数据存到堆内存  
