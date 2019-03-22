@@ -74,7 +74,7 @@ public class NIOClient {
 		Scanner scanner = new Scanner(System.in);
 		String tmp = null;
 		while (true) {
-			tmp = scanner.next();
+			tmp = scanner.nextLine();
 			if (success)
 				break;
 			write(socketChannel, tmp);
