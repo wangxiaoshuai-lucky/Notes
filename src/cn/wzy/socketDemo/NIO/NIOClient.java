@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
@@ -13,28 +14,31 @@ import java.util.Set;
 public class NIOClient {
 
 	private static ByteBuffer buffer = ByteBuffer.allocate(1024);
-	private final static InetSocketAddress address = new InetSocketAddress("120.77.151.141", 7777);
+	private final static InetSocketAddress address = new InetSocketAddress("127.0.0.1", 7777);
 
 	static private String rec(SocketChannel channel) throws IOException {
 		buffer.clear();
 		int count = channel.read(buffer);
-		return new String(buffer.array(),0,count);
+		return new String(buffer.array(), 0, count, StandardCharsets.UTF_8);
 	}
 
 	static private void write(SocketChannel channel, String content) throws IOException {
 		buffer.clear();
-		buffer.put(content.getBytes());
+		buffer.put(content.getBytes(StandardCharsets.UTF_8));
 		buffer.flip();
 		channel.write(buffer);
 	}
 
 	private static volatile boolean success = false;
-	public static void main(String[] args) throws IOException {
+
+	private static volatile String name = "wzy";
+
+	public static void main(String[] args) throws IOException, InterruptedException {
 		Selector selector = Selector.open();
 		SocketChannel socketChannel = SocketChannel.open(address);
 		socketChannel.configureBlocking(false);
 		socketChannel.register(selector, SelectionKey.OP_READ);
-		new Thread(()->{
+		new Thread(() -> {
 			SocketChannel client = null;
 			try {
 				while (true) {
@@ -47,15 +51,17 @@ public class NIOClient {
 						if (key.isReadable()) {
 							client = ((SocketChannel) key.channel());
 							String msg = rec(client);
-							if (msg.contains("hello"))
+							if (msg.contains("hello")) {
+								name = msg.substring(6);
 								success = true;
+							}
 							System.out.println(msg);
 							key.interestOps(SelectionKey.OP_READ);
 						}
 					}
 					set.clear();
 				}
-			} catch (Exception e){
+			} catch (Exception e) {
 				if (client != null) {
 					try {
 						client.close();
@@ -66,16 +72,18 @@ public class NIOClient {
 			}
 		}).start();
 		Scanner scanner = new Scanner(System.in);
-		String name = null;
-		while(true) {
-			name = scanner.next();
+		String tmp = null;
+		while (true) {
+			tmp = scanner.next();
 			if (success)
 				break;
-			write(socketChannel,name);
+			write(socketChannel, tmp);
 		}
-		while (scanner.hasNext()) {
-			String msg = scanner.next();
-			write(socketChannel,name + "###" + msg);
+		write(socketChannel, name + "###" + tmp);
+		while (true) {
+			String msg = scanner.nextLine();
+			if (!msg.trim().equals(""))
+				write(socketChannel, name + "###" + msg);
 		}
 	}
 }
