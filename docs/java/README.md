@@ -90,7 +90,29 @@ String a = "abc";字符串是存到方法区
 反射机制运行时获取class参数，变量之类的  
 内省机制获取变量的getter&setter方法  
 ### java的序列化  
-将实例对象（内存对象）保存到磁盘静态对象字节序列，可以用于网络传输实例对象。
+将实例对象（内存对象）保存到磁盘静态对象字节序列，可以用于网络传输实例对象。  
+可序列化类的所有子类都是可序列化的。
+~~~
+public class Main implements Serializable{
+	static class Child extends Main{
+		int code;
+	}
+	int id;
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		ObjectOutput output = new ObjectOutputStream(new FileOutputStream("./out.txt"));
+		Child main = new Child();
+		main.code = 1555;
+		main.id = 1555;
+		output.writeObject(main);
+		output.flush();
+		output.close();
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("./out.txt"));
+		Child main1 = (Child) input.readObject();
+		System.out.println(main1.code);//1555
+	}
+}
+
+~~~
 ### 伪共享问题
 计算机CPU和内存之间会有缓存（一级、二级、三级），当多核CPU访问三级缓存的时候，缓存是以行为单位缓存数据，
 比如有一个数组，当CPU取第一个数据的时候，三级缓存会多存几个相邻数据（凑满一行），
