@@ -1,4 +1,4 @@
-package cn.wzy;
+package cn.wzy.AtomicDemo;
 
 import java.util.concurrent.atomic.AtomicStampedReference;
 

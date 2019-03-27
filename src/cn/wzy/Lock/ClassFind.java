@@ -55,5 +55,10 @@ public class ClassFind {
 		Condition condition = lock.newCondition();
 		lock.lock();
 		condition.await();
+		/**
+		 * 8. CopyOnWriteArrayList
+		 */
+		CopyOnWriteArrayList<String> arrayList = new CopyOnWriteArrayList<>();
+		arrayList.add("asdf");
 	}
 }
