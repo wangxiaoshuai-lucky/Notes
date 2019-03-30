@@ -31,6 +31,7 @@
 * JVM GC算法和垃圾收集器
 * JVM设置参数
 ## [多线程、锁](./docs/lock/README.md)
+* ThreadLocal
 * 线程的状态
 * 线程的交互
 * 线程池

@@ -1,4 +1,7 @@
 ## 多线程、锁
+### ThreadLocal
+线程副本，使用场景：在Controller层中需要全局保存一个参数，使用ThreadLocal实现变量的隔离  
+每一个Thread都有一个ThreadLocalMap存取当前的所有变量值，key为ThreadLocal，value为变量。
 ### 线程的状态
 * NEW：至今尚未启动的线程处于这种状态。
 * RUNNABLE：正在 Java 虚拟机中执行的线程处于这种状态。
