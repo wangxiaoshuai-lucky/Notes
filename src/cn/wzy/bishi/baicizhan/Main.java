@@ -1,6 +1,5 @@
-package cn.wzy.baicizhan;
+package cn.wzy.bishi.baicizhan;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {

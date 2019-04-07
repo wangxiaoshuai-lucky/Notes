@@ -1,4 +1,4 @@
-package cn.wzy.bytedance;
+package cn.wzy.bishi.bytedance;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package cn.wzy.baicizhan;
+package cn.wzy.bishi.baicizhan;
 
 import java.util.*;
 

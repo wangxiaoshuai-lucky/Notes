@@ -1,4 +1,4 @@
-package cn.wzy.kuaishou;
+package cn.wzy.bishi.kuaishou;
 
 import java.util.*;
 
