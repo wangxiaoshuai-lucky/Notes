@@ -30,6 +30,7 @@
     * 类加载器
 * JVM GC算法和垃圾收集器
 * JVM设置参数
+* JVM监控命令
 ## [多线程、锁](./docs/lock/README.md)
 * ThreadLocal
 * 线程的状态

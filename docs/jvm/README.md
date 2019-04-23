@@ -88,3 +88,16 @@ Minor GC 的触发条件：大多数情况下，直接在 Eden 区中进行分�
 -Xms:2560m 初始堆大小  
 -Xmn:1280m 新生代大小  
 -XXSurvivorRatio:3 年轻代中Eden区与Survivor区的大小比值
+### JVM监控命令
+* jps:jvm process status
+    * -l:输出主类的全名
+    * -v:输出启动时的JVM的参数
+* jstat:监控运行状态信息
+    * -gc 虚拟机id：输出虚拟机id的堆情况：各个分区的容量和使用情况
+* jstack：线程快照：每个线程正在执行的堆栈情况
+    * -l:展示堆栈信息
+### cpu占用高的排查方法
+* top查询出占用高的进程pid
+* top -Hp ${pid}查出相关线程id
+* printf "%x\n" pid 输出十六进制表示
+* jstack -l：找到上述线程的相关代码
