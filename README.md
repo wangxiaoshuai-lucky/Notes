@@ -17,6 +17,7 @@
 * 引用
 * switch只能用int和枚举，String
 * 编译型语言与解释型语言
+* Comparator 和 Comparable接口
 ## [JVM相关知识点](./docs/jvm/README.md)
 * JMM及8个原子操作
 * java对象存储模型

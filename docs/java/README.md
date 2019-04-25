@@ -138,3 +138,6 @@ public class Main implements Serializable{
 ### 编译型语言与解释型语言
 * 编译型语言：有编译过程的语言，将代码编译成机器码，如c/c++
 * 解释型语言：程序代码是运行过程中翻译成机器语言，java是jvm动态翻译的
+### Comparator 和 Comparable接口
+* Comparator：可以比较两个对象，相当于一个裁判的职责
+* Comparable：可以与别人比较，相当于一个选手
