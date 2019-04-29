@@ -53,9 +53,9 @@ public class StreamDemo {
 		List<User> list = Arrays.asList(new User(1,null), new User(2,"aaa"), new User(3,"bbb"));
 		Map<Integer, String> idNames = new HashMap<>();
 		Stream<User> stream = list.stream();
-		stream.forEach((p) -> {
-			idNames.put(p.id,p.name);
-		});
+		stream.forEach(p ->
+			idNames.put(p.id,p.name)
+		);
 		System.out.println(idNames);
 	}
 
