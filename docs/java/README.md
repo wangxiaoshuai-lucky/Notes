@@ -141,3 +141,6 @@ public class Main implements Serializable{
 ### Comparator 和 Comparable接口
 * Comparator：可以比较两个对象，相当于一个裁判的职责
 * Comparable：可以与别人比较，相当于一个选手
+### 死锁、活锁
+* 死锁: 两个或多个线程相互等待对方释放锁，则会出现死锁现象。
+* 活锁: 任务或者执行者没有被阻塞，由于某些条件没有满足，导致一直重复尝试，失败，尝试，失败。
