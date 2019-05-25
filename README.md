@@ -121,7 +121,10 @@
 * ISR
 * 发送消息流程
 ### [rocketMQ](./docs/rocketMQ/README.md)
-* asdf
+* 运行模型（kafka大同小异）
+* 基本概念
+* 储存结构
+* 主要文件
 ## [高并发的相关部分](./docs/distribute/distribute.md)
 * 服务器降级
 * 缓存穿透
