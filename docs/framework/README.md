@@ -1,3 +1,13 @@
+## spring-boot 启动解析
+* beanFactory：bean容器
+* StopWatch：监测各项初始化工作的耗時情況
+* ConfigurableApplicationContext：配置式spring应用上下文
+* BeanFactoryPostProcessor：后置处理器,刷新及注册beans进应用上下文
+* ConfigurationClass：配置式的bean,相当于一个bean.xml
+* ConfigurationClassParser：ConfigurationClass的解析器,负责解析
+* ComponentScanAnnotationParser：扫描配置页面，为ClassPathScanningCandidateComponentProvider提供扫描位置
+* ClassPathScanningCandidateComponentProvider：具体扫描bean的类,需要basePackage路劲参数
+![scan](./imgs/1.png)
 ## spring框架的理解
 * IOC和DI的原理和源码分析
 * AOP的实现原理  
