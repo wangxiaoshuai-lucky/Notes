@@ -7,6 +7,20 @@
 * ConfigurationClassParser：ConfigurationClass的解析器,负责解析
 * ComponentScanAnnotationParser：扫描配置页面，为ClassPathScanningCandidateComponentProvider提供扫描位置
 * ClassPathScanningCandidateComponentProvider：具体扫描bean的类,需要basePackage路劲参数
+
+加载流程：  
+* SpringApplication的run方法会初始化一个ConfigurableApplicationContext，这个应用上下文内部有一个BeanFactory，包含Spring的bean。接下来的注册bean的流程大多数是对beanFactory的操作。
+* 注册bean之前会对beanFactory添加BeanPostProcessor（前置处理器）。
+* 对前置处理器分类，分成BeanDefinitionRegistryPostProcessor，其他常规前置处理器
+* 执行BeanDefinitionRegistryPostProcessor典型的是ConfigurationClassPostProcessor
+* ConfigurationClassPostProcessor首先从容器中拿出像@Configuration类似的配置类
+* ConfigurationClassPostProcessor有个属性叫ConfigurationClassParser去解析Configuration类
+* ConfigurationClassParser委托ComponentScanAnnotationParser去扫描bean
+* ComponentScanAnnotationParser如果没有具体的扫描包，会以@Configuration类的包名为扫描包
+* ComponentScanAnnotationParser委托ResourcePatternResolver路径解析器去检索所有匹配的class，返回Resource对象（FileSystemResource）
+* ComponentScanAnnotationParser将Resource对象读取成ClassMetadata（bean的元数据，描述bean的物理位置信息，比如路径，类名）
+* ComponentScanAnnotationParser接着解析成BeanDefinition（bean在spring中的储存形式，核心信息：类名、MutablePropertyValues包含了List<键值>的所有属性）
+将解析出来的beanDefinition注册进beanFactory中完成bean注册
 ![scan](./imgs/1.png)
 ## spring框架的理解
 * IOC和DI的原理和源码分析
