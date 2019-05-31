@@ -10,8 +10,8 @@
 
 加载流程：  
 * SpringApplication的run方法会初始化一个ConfigurableApplicationContext，这个应用上下文内部有一个BeanFactory，包含Spring的bean。接下来的注册bean的流程大多数是对beanFactory的操作。
-* 注册bean之前会对beanFactory添加BeanPostProcessor（前置处理器）。
-* 对前置处理器分类，分成BeanDefinitionRegistryPostProcessor，其他常规前置处理器
+* 注册bean之前会对beanFactory添加BeanPostProcessor（后置处理器）。
+* 对后置处理器分类，分成BeanDefinitionRegistryPostProcessor，其他常规后置处理器
 * 执行BeanDefinitionRegistryPostProcessor典型的是ConfigurationClassPostProcessor
 * ConfigurationClassPostProcessor首先从容器中拿出像@Configuration类似的配置类
 * ConfigurationClassPostProcessor有个属性叫ConfigurationClassParser去解析Configuration类
@@ -20,8 +20,19 @@
 * ComponentScanAnnotationParser委托ResourcePatternResolver路径解析器去检索所有匹配的class，返回Resource对象（FileSystemResource）
 * ComponentScanAnnotationParser将Resource对象读取成ClassMetadata（bean的元数据，描述bean的物理位置信息，比如路径，类名）
 * ComponentScanAnnotationParser接着解析成BeanDefinition（bean在spring中的储存形式，核心信息：类名、MutablePropertyValues包含了List<键值>的所有属性）
-将解析出来的beanDefinition注册进beanFactory中完成bean注册
-![scan](./imgs/1.png)
+将解析出来的beanDefinition注册进beanFactory中完成bean注册  
+![scan](./imgs/1.png)  
+
+获取bean流程：
+* ConfigurableApplicationContext内部有一个BeanFactory，调用getBean委托内部BeanFactory去获取
+* 如果是单例就查看全局单例Map里是否有这个实例，如果有就返回
+* 没有实例，获取BeanDefinition
+* 生成BeanWrapper（生成出基本类，未进行依赖注入）
+* 取出BeanPostProcessor,依次执行关于依赖注入的后置处理器
+* AutowiredAnnotationBeanPostProcessor(核心后置处理器)解析出需要注入参数的属性InjectionMetadata
+* 通过BeanFactory的resolveDependency获取出属性的value
+* 利用反射修改目标对象的属性值
+* 返回bean
 ## spring框架的理解
 * IOC和DI的原理和源码分析
 * AOP的实现原理  
