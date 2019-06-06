@@ -1,4 +1,36 @@
 ## 多线程、锁
+### Thread.join方法
+~~~
+Thread A = new MyThread();
+A.start();
+A.join();
+
+=====源码=====
+public final synchronized void join(long millis) throws InterruptedException {
+    long base = System.currentTimeMillis();  //获取当前时间
+    long now = 0;
+    if (millis < 0) {
+        throw new IllegalArgumentException("timeout value is negative");
+    }
+    if (millis == 0) {    //这个分支是无限期等待直到b线程结束
+        while (isAlive()) {
+            wait(0);
+        }
+    } else {    //这个分支是等待固定时间，如果b没结束，那么就不等待了。
+        while (isAlive()) {
+            long delay = millis - now;
+            if (delay <= 0) {
+                break;
+            }
+            wait(delay);
+            now = System.currentTimeMillis() - base;
+        }
+    }
+}
+~~~
+主线程调用A线程的join方法，拿到A线程的锁，然后wait让出锁阻塞等待，
+A线程结束之后会在JVM层面上去notifyAll()唤醒这些阻塞线程，唤醒之后A线程已死，
+直接跳回主线程中继续运行。
 ### ThreadLocal
 线程副本，使用场景：在Controller层中需要全局保存一个参数，使用ThreadLocal实现变量的隔离  
 每一个Thread都有一个ThreadLocalMap存取当前的所有变量值，key为ThreadLocal，value为变量。

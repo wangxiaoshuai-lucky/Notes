@@ -35,6 +35,7 @@
 * JVM监控命令
 * cpu占用高的排查方法
 ## [多线程、锁](./docs/lock/README.md)
+* Thread.join方法
 * ThreadLocal
 * 线程的状态
 * 线程的交互
