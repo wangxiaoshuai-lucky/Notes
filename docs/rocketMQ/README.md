@@ -28,6 +28,30 @@ Consumer也是一样，需要知道消费队列的路由情况。当然不是每
 * BrokerData:broker集群：包括集群和一个broker地址列表
 * BrokerLiveInfo：心跳更新信息，包括更新时间
 #### 路由注册
-broker启动时向所有NameServer发送一次心跳，之后每30s发送一次心跳包
+注册的时候携带参数：
+* final String clusterName,集群名字
+* final String brokerAddr,broker地址IP:PORT
+* final String brokerName,broker名字
+* final long brokerId,brokerId，确定主从关系
+* final String haServerAddr,
+* final TopicConfigSerializeWrapper topicConfigWrapper,topic的元数据
+* final List<String> filterServerList,过滤服务器列表
+* final Channel channel，broker连接通道  
+
+broker启动时向所有NameServer发送一次心跳，之后每30s发送一次心跳包.  
+处理流程：
+* 将broker加入到集群中
+* 更新broker的主从列表
+* 如果是master，创建或者更新topic元数据
+* 创建topic的queue列表，也就是消息路由
+* 更新存活broker表
+* 注册broker过滤服务器列表
+* 注册完成
 #### 路由删除
-NameServer每10s遍历一次brokerLiveTable，如果更新时间比较久，删除这个路由记录
+NameServer每10s遍历一次brokerLiveTable，如果更新时间比较久，删除这个broker相关信息  
+需要检查的信息：
+* 删除存活broker列表
+* 删除此broker的过滤服务器列表
+* 删除该broker地址在brokerAddrTable的信息,brokerName的主从集群
+* 删除这个broker在集群中的信息
+* 删除brokerName相关topic路由信息
