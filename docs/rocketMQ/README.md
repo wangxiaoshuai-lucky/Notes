@@ -114,3 +114,16 @@ public MessageQueue selectOneMessageQueue(final String lastBrokerName) {
     * 构建发送请求包：生产者组、主题名称、队列数、队列id、发送时间、重试次数等
     * 发送数据
 ### 消息存储
+#### 主要存储文件
+* Commitlog文件:所有发送到此broker的消息全都顺序得存储在这个文件中
+* ConsumerQueue文件:消息消费队列,消息存到Commitlog之后会异步发送到消息队列
+* indexFile文件:消息索引文件，存储消息key->offset的对应关系
+#### 消息发送存储过程
+* 检验目标broker的合法性、消息的长度限制
+* 获取commitLog
+* 申请写锁
+* 调用commitLog的putMessage方法
+* 查找mapperFile没有就创建一个
+* 追加消息到mapperFile中，如果此mapperFile满了，新建一个mapperFile并设置position指针
+* 为消息分配一个全局唯一消息id
+* 获取消息偏移量
