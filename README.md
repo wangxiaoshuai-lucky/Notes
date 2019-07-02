@@ -165,6 +165,14 @@
 * netstat -tunlp|grep ：查看端口占用情况
 * vim:V可视化模式，gg光标到首行，G到尾行
 * | 表示管道符：作用是把前面的 stdout 输出当作下一个命令的 stdin 数据
+## [算法、数据结构](./docs/algorithm/algorithm.md)
+* B树
+* B+树
+* 二叉树
+* 红黑树
+* 动态规划
+* 贪心算法
+* 排序算法
 ## [设计模式](./docs/design_pattern/README.md)
 * 创建型模式
     * 工厂方法模式
