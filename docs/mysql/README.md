@@ -108,3 +108,25 @@ b.行的删除版本要么未定义,要么大于当前事务版本号,这可以�
 ### 14 快照读和当前读
 当前读：即加锁读，读取记录的最新版本号，会加锁保证其他并发事物不能修改当前记录，直至释放锁。  
 快照读：不加锁，读取记录的快照版本，而非最新版本，使用MVCC机制，最大的好处是读取不需要加锁
+### 15 主从复制
+master配置:  
+~~~
+server-id=1
+log-bin=master-bin
+log-bin-index=master-bin.index
+~~~
+slave:
+~~~
+server-id=2
+relay-log-index=slave-relay-bin.index
+relay-log=slave-relay-bin
+
+mysql> change master to master_host='主xxx.xxx.xxx.xx',
+master_port=3306,
+master_user='user',
+master_password='pwd',
+master_log_file='master-bin.000001',
+master_log_pos=0;
+
+mysql> start slave;
+~~~

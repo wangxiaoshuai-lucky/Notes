@@ -98,6 +98,7 @@
 * MyISAM和InnoDB对比
 * MVCC机制
 * 快照读和当前读
+* 主从同步
 ## [redis](./docs/redis/redis.md)
 * 5中数据结构(string, list, set, hash, zset)
 * redis持久化（RDB、AOF）
