@@ -27,12 +27,26 @@
 * ConfigurableApplicationContext内部有一个BeanFactory，调用getBean委托内部BeanFactory去获取
 * 如果是单例就查看全局单例Map里是否有这个实例，如果有就返回
 * 没有实例，获取BeanDefinition
-* 生成BeanWrapper（生成出基本类，未进行依赖注入）
-* 取出BeanPostProcessor,依次执行关于依赖注入的后置处理器
-* AutowiredAnnotationBeanPostProcessor(核心后置处理器)解析出需要注入参数的属性InjectionMetadata
-* 通过BeanFactory的resolveDependency获取出属性的value
-* 利用反射修改目标对象的属性值
+* 生成BeanWrapper（生成出基本类，未进行依赖注入），如果是单例同时注册进factory中
+* 调用populateBean方法（进行依赖注入）
+    * 取出BeanPostProcessor,依次执行关于依赖注入的后置处理器
+    * AutowiredAnnotationBeanPostProcessor(核心后置处理器)解析出需要注入参数的属性InjectionMetadata
+    * 通过BeanFactory的resolveDependency获取出属性的value
+    * 利用反射修改目标对象的属性值
+* 调用initializeBean初始化bean
+    * 如果配置有aop的advice，创建代理对象替换当前bean
 * 返回bean
+## AOP解析
+每个advice都是一个bean注册到spring中，aop代理过程是在获取bean的时候产生的  
+过程：
+* 上一步骤：生成bean，populateBean进行依赖注入
+* 初始化：依次调用BeanPostProcessor
+    * 其中有一个AbstractAutoProxyCreator生成代理类
+* getAdvicesAndAdvisorsForBean获取相关的Object[] specificInterceptors拦截器
+* createProxy生成代理类
+    * 如果是有接口，采用jdk代理，创建代理对象，在自定义的InvocationHandler中写好调用advisor调用链条逻辑
+    * 没有接口采用cglib代理，继承目的类，设置回调处理函数MethodInterceptor,在其中调用advisor调用链条逻辑
+* 返回代理类
 ## spring框架的理解
 * IOC和DI的原理和源码分析
 * AOP的实现原理  
