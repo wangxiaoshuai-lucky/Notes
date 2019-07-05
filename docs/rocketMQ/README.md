@@ -118,6 +118,10 @@ public MessageQueue selectOneMessageQueue(final String lastBrokerName) {
 * Commitlog文件:所有发送到此broker的消息全都顺序得存储在这个文件中
 * ConsumerQueue文件:消息消费队列,消息存到Commitlog之后会异步发送到消息队列
 * indexFile文件:消息索引文件，存储消息key->offset的对应关系
+#### MappedFile
+位于CommitLog下方，是最终保存消息的地方，当文件长度达到限制是新建文件，
+名字为第一个消息的全局偏移量，由于文件会删除，所以通过offset获取mappedFIle算法：
+(int)(offset/mappedFIleSize - fromOffset/mappedFIleSize)
 #### 消息发送存储过程
 * 检验目标broker的合法性、消息的长度限制
 * 获取commitLog
@@ -126,4 +130,28 @@ public MessageQueue selectOneMessageQueue(final String lastBrokerName) {
 * 查找mapperFile没有就创建一个
 * 追加消息到mapperFile中，如果此mapperFile满了，新建一个mapperFile并设置position指针
 * 为消息分配一个全局唯一消息id
-* 获取消息偏移量
+* 更新消息偏移量
+* 释放写锁
+* 进行信息刷盘，也就是说上述的消息全部存到内存中的MappedFileQueue中
+#### MappedFileQueue
+管理MappedFile文件，有如下属性：
+* storePath：存储目录，也就是commitLog的目录
+* mappedFileSize：单个文件的限制
+* mappedFiles：list文件列表
+* flushedWhere ：刷盘指针，本地文件保存消息指针
+* committedWhere ：当前提交消息指针，内存中的写指针
+#### MappedFile
+存储消息，属性：
+* wrotePosition：写指针，从0开始
+* committedPosition：提交指针
+* flushedPosition：刷盘指针
+* fileChannel：文件通道
+* writeBuffer：内存buffer
+
+大致操作：
+* 提交操作：将写指针和提交指针间的数据写入到内存buffer中
+* 刷盘操作：将内存buffer的数据刷到磁盘中（通过FileChannel）
+#### ConsumerQueue
+保存消息队列，相当于commitLog的索引文件，供消费者消费，只保存该topic在commitLog中的offset、长度size、tag-hashcode，
+一共20个字节
+#### indexFile
