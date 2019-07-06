@@ -155,3 +155,30 @@ public MessageQueue selectOneMessageQueue(final String lastBrokerName) {
 保存消息队列，相当于commitLog的索引文件，供消费者消费，只保存该topic在commitLog中的offset、长度size、tag-hashcode，
 一共20个字节
 #### indexFile
+消息索引：加快消息检索速度，以hashMap的形式存储。
+![indexFile](./imgs/4.png)
+index条目的最后部分存储的是上一个关系的index下标，比如一个hashCode将要插入到10号槽位，
+获取发现10号卡槽对应的index为1号index，那么现在插入的index条目（假设放到5号index位置）最后一个位置标记1，
+表明同样hash的元素在1号，当第一个放到10号卡槽的key发现找到的是5号index位置的key，比对发现不一致，
+递归的往上找，知道找到了对应的index条目或者找到顶部还没找到为止。
+### 消费者
+#### 消费模式
+* 集群式：消费组中只有一个消费者对消息进行消费
+* 广播模式：消费组内每个消费者都会对消息进行消费
+* 集群下的负载：每个消息队列只对应一个消费者，一个消费者可以对应多个消息队列
+#### 初始化
+* 构建主题订阅信息
+* 初始化MQClientInstance、RebalanceImpl（消息重新负载均衡）
+* 初始化消息消费进度
+    * 集群模式：消息进度保存到broker上
+    * 广播模式：消息进度保存到消费端
+* 向MQClientInstance注册消费者
+#### 消息拉取
+流程：
+* 客户端请求封装
+    * 根据brokeName、brokerId从MQClientInstance中获取broker地址，给出一个建议，
+* 消息服务器查找并返回消息
+* 消息拉取客户端处理返回的消息
+    * 同时拉取建议：下次拉取是从主节点拉取还是从节点拉取
+#### 消息进度更新
+* 消息进度会同步到broker
