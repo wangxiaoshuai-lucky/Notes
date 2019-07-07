@@ -13,7 +13,7 @@ public class Main1 {
 			scan.nextInt();
 		Random random = new Random();
 		if (random.nextBoolean()) {
-			System.out.println(7);
+			System.out.println(2);
 		} else {
 			System.out.println(3);
 		}
