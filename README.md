@@ -158,6 +158,17 @@
 * HTTPS
 * UDP协议
 * UDP和TCP的区别
+## [操作系统](./docs/operation_system/README.md)
+* 基本功能
+* 并发、并行
+* 内核态、用户态
+* 进程、线程
+* 死锁
+    * 产生条件
+    * 死锁避免
+    * 死锁避免
+* 虚拟内存
+* 内存置换算法
 ## [linux常用命令](./docs/Linux/README.md)
 * ps -ef|grep :查进程
 * df -h /:查看磁盘使用情况
