@@ -34,6 +34,8 @@
 * JVM设置参数
 * JVM监控命令
 * cpu占用高的排查方法
+* 堆栈的增长方式
+* 多态的实现原理
 ## [多线程、锁](./docs/lock/README.md)
 * Thread.join方法
 * ThreadLocal
@@ -158,6 +160,7 @@
 * HTTPS
 * UDP协议
 * UDP和TCP的区别
+* ping原理
 ## [操作系统](./docs/operation_system/README.md)
 * 基本功能
 * 并发、并行
@@ -185,6 +188,7 @@
 * 动态规划
 * 贪心算法
 * 排序算法
+## web安全
 ## [设计模式](./docs/design_pattern/README.md)
 * 创建型模式
     * 工厂方法模式
