@@ -188,7 +188,11 @@
 * 动态规划
 * 贪心算法
 * 排序算法
-## web安全
+## [web安全](./docs/web_security/README.md)
+* CSRF 跨站请求伪造
+* XSS
+* SQL注入
+* 加密算法
 ## [设计模式](./docs/design_pattern/README.md)
 * 创建型模式
     * 工厂方法模式
