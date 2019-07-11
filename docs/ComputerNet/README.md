@@ -18,11 +18,13 @@ OSI模型与TCP模型的对应关系：
 * 传输层：将报文进程之间传递；tcp，udp协议
 * 应用层：高层应用协议，应用都依据一个协议实现沟通交流；ftp smtp http等
 ### tcp三次握手
+![](./imgs/11.jpg)  
 第一次握手：建立连接时，客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认；  
 第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；  
 第三次握手：客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。  
 完成三次握手，客户端与服务器开始传送数据
 ### tcp四次挥手
+![](./imgs/10.jpg)  
 1客户端先发送FIN，进入FIN_WAIT1状态  
 2服务端收到FIN，发送ACK，进入CLOSE_WAIT状态，客户端收到这个ACK，进入FIN_WAIT2状态  
 3服务端发送FIN，进入LAST_ACK状态 
@@ -96,3 +98,15 @@ ICMP报文：
 不同网段：  
 主机在同网段没找到ip对应地址，则将目的mac地址设置成网关的mac地址，让网关转发，网关发现下一跳接口能访问目的主机，
 将源mac地址改为下一跳mac地址，目的mac地址改为最终主机mac地址，同时都学习到了mac地址，然后回传的时候也是一样。
+### TCP状态机
+![状态机](./imgs/9.jpg)
+* CLOSED 状态时初始状态。
+* LISTEN 服务端运行起来监听
+* SYNRECVD:服务器端收到SYN后，状态为SYN；发送SYN ACK;
+* SYN_SENTY:应用程序发送SYN后，状态为SYN_SENT
+* ESTABLISHED:SYNRECVD收到ACK后，状态为ESTABLISHED； SYN_SENT在收到SYN ACK，发送ACK，状态为ESTABLISHED；
+* CLOSE_WAIT:服务器端在收到FIN后
+* TIME_WAIT:主动关闭的一方
+
+客户端转换：close -> synsend -> establish -> fin-wait1 -> fin-wait2 -> timewait -> close  
+服务端转换：close -> listen -> synrecv -> establish -> close-wait -> last-ack -> close
