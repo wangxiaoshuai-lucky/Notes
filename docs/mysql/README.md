@@ -130,3 +130,7 @@ master_log_pos=0;
 
 mysql> start slave;
 ~~~
+### hash（散列）和b+树 对比
+* 范围查询 hash不支持
+* 不支持排序
+* Hash索引不能模糊查询
