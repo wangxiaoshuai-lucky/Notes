@@ -177,6 +177,7 @@
 * 虚拟内存
 * 内存置换算法
 ## [linux常用命令](./docs/Linux/README.md)
+* grep命令：查询文本
 * ps -ef|grep :查进程
 * df -h /:查看磁盘使用情况
 * free：查看内存使用情况
