@@ -51,6 +51,11 @@ A线程结束之后会在JVM层面上去notifyAll()唤醒这些阻塞线程，�
 * AThread.join：本线程让某线程结束之后再继续
 * Thread.yield:让当前线程由“运行状态”进入到“就绪状态”，从而让其它具有相同优先级的等待线程(包括自己)获取执行权
 ### 线程池
+* 四个线程池：线程池都是调用ThreadPoolExecutor的构造器，区别是传入coreSize，maxSize
+    * fixed:core = maxSize = param
+    * cache:core = 0,maxSize = Integer.MAX_VALUE
+    * single: core = maxSize = 1
+    * scheduled: core = param, maxSize = Integer.MAX_VALUE
 * 线程池的好处  
 1.资源利用率变高了  
 2.提高了响应速度  
