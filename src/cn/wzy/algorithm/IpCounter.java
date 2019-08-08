@@ -1,54 +1,63 @@
 package cn.wzy.algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @ClassName IpCounter
- * @Author WangZY
- * @Date 2019/7/23 14:44
- * @Version 1.0
+ * IpCounter
+ * @author  WangZY
+ * @since  2019/7/23 14:44
+ * @version  1.0
  **/
 public class IpCounter {
 
-    static void dfs(String str, int[] index, int time) {
-        if (time == 4) {
-            if (check(str, index)) {
-                int k = 1;
-                for (int i = 0; i < str.length(); i++) {
-                    System.out.print(str.charAt(i));
-                    if (k <= 3 && index[k] == i) {
-                        System.out.print(".");
-                        k++;
-                    }
-                }
-                System.out.println();
+    public static void main(String[] args) {
+        String ip = "25525511135";
+        List<String> result = new ArrayList<>();
+        dfs(new ArrayList<>(), 1, ip, result);
+        System.out.println(result);
+    }
+
+    private static boolean check(String str) {
+        if (str.startsWith("0") && str.length() > 1 || str.equals("")) {
+            return false;
+        }
+        return str.length() <= 3 && Integer.valueOf(str) <= 255;
+    }
+
+    private static String printf(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            sb.append(list.get(i));
+            if (i != 3) {
+                sb.append(".");
             }
+        }
+        return sb.toString();
+    }
+
+    private static void dfs(List<String> list, int step, String last, List<String> result) {
+        // 最后一步，检测是否合适
+        if (step == 4) {
+            list.add(last);
+            if (check(last)) {
+                result.add(printf(list));
+            }
+            list.remove(list.size() - 1);
             return;
         }
-        for (int i = index[time - 1] + 1, t = 0; t < 3;t++, i++) {
-            index[time] = i;
-            dfs(str, index, time + 1);
+        for (int i = 1; i <= 3 && i <= last.length(); i++) {
+            String now = last.substring(0, i);
+            if (!check(now)) {
+                return;
+            }
+            String newLast = "";
+            if (i != last.length()) {
+                newLast = last.substring(i);
+            }
+            list.add(now);
+            dfs(list, step + 1, newLast, result);
+            list.remove(list.size() - 1);
         }
-    }
-
-    static boolean check(String str, int[] index) {
-        for (int i = 1; i <= 4; i++) {
-            String now;
-            if (i != 4) {
-                now = str.substring(index[i - 1] + 1, index[i] + 1);
-            } else {
-                now = str.substring(index[i  -1] + 1);
-            }
-            if (now.startsWith("0") && now.length() != 1) {
-                return false;
-            }
-            if (Integer.valueOf(now) > 255) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        String ip = "25525511323";
-        dfs(ip, new int[]{-1, 0, 0, 0}, 1);
     }
 }

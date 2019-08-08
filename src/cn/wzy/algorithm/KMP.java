@@ -1,12 +1,12 @@
-package cn.wzy;
+package cn.wzy.algorithm;
 
 /**
- * @ClassName StringFind
+ * @ClassName KMP
  * @Author WangZY
  * @Date 2019/7/22 14:53
  * @Version 1.0
  **/
-public class StringFind {
+public class KMP {
 
     static int[] initNext(String pattern) {
         char[] p = pattern.toCharArray();
