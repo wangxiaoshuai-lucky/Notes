@@ -76,6 +76,8 @@ InnoDB存储引擎自动创建一个哈希表，自动根据访问的频率和�
 #### 11.1 尽可能不要使用NULL值
 * NULL使得索引维护更加复杂
 * NULL列需要一个额外字节作为判断是否为NULL的标志位，加大存储空间
+* select * from user where name not in ('12',...) 不会返回含有空值的记录
+* select * from user where name is null 是会走索引的
 #### 11.2 优化查询语句
 * 请尽量使用简单的查询，避免使用表链接
 * 请尽量避免全表扫描
