@@ -49,3 +49,18 @@ redis.do(command)
 ~~~
 * 容错机制：基于redis底层sentinel实现redis-server-group的自动切换  
 ![容错机制](./imgs/4.png)
+## 《redis的设计与实现》读书笔记
+### 1. SDS （simple dynamic string）简单动态字符串
+~~~
+struct sdshdr {
+    int len; // 字符长度
+    int free; // 空闲长度
+    char buf[]; // 数据字符数组
+};
+~~~
+相对于基本C语言字符串的优势：
+* 获取长度的复杂度低
+* 杜绝缓冲区的溢出、越界
+* 减少修改字符串的内存重分配
+* 二进制安全，可以存'\0'的二进制数据
+* 兼容C字符串函数

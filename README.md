@@ -112,6 +112,7 @@
 * redis 主从复制
 * 哨兵机制 sentinel
 * redis集群codis 大致实现原理
+* 《redis的设计与实现》读书笔记
 ## [zookeeper相关知识点](./docs/zookeeper/README.md)
 * 概述
 * 监听机制
