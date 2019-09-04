@@ -228,8 +228,10 @@
     * 访问者模式
     * 中介者模式
     * 解释器模式
-## [春招面经](./docs/chunzhao/readme.md)
+## [春招面经](docs/mainjing/chunzhao.md)
 * 腾讯提前批（后端开发）-三面挂
 * 腾讯提前批（运营开发-被捞起来）-两面挂
 * 阿里-支付宝-四面（三技术+一HR）-offer报批挂
 * 头条 - 一面挂
+## [秋招面经](docs/mainjing/qiuzhao.md)
+* 头条 - offer
