@@ -64,3 +64,57 @@ struct sdshdr {
 * 减少修改字符串的内存重分配
 * 二进制安全，可以存'\0'的二进制数据
 * 兼容C字符串函数
+### 2. 链表设计
+数据结构：双向链表
+~~~
+typedef struct listNode {
+	
+	void *value;
+	
+	struct listNode *pre;
+	
+	struct listNode *next;
+};
+
+typedef struct node{
+	
+	listNode *head;
+	
+	listNode *tail;
+	
+	long len;
+};
+~~~
+### 3. 字典设计
+设计和HashMap类似，一个entry的数组，采用链地址法解决hash冲突
+~~~
+typedef struct dictEntry {
+    void *keyl
+    
+    union {
+        void *val;
+        ......;
+    }
+    // 链地址法链接下一个节点
+    struct dictEntry *next;
+};
+
+哈希表：
+typedef struct dictht {
+    dictEntry **table; // 节点数组
+    
+    long size; // 哈希表的长度
+    
+    long used; // 已存有节点数
+};
+
+typedef struct dict {
+    dictht ht[2]; // 额外的一个空哈希表用于rehash的复制操作
+};
+~~~
+rehash操作：
+* 扩容或者缩容时，分配hr[1] 的内存
+* 将ht[0] 中的所有entry重新计算移动到ht[1] 中
+* ht[0] 和 ht[1] 指针交换，释放ht[1]
+
+渐进式rehash：分步骤rehash每一个索引的数据，同时涉及到的增删改操作在两个哈希表中进行。
