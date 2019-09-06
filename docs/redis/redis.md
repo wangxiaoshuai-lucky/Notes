@@ -50,6 +50,16 @@ redis.do(command)
 * 容错机制：基于redis底层sentinel实现redis-server-group的自动切换  
 ![容错机制](./imgs/4.png)
 ## 《redis的设计与实现》读书笔记
+redis主要结构及其底层实现： 
+ 
+|数据结构|底层实现|
+|:----:|:---:
+string | SDS
+list | listNode, ziplist
+set | dict, intset, ziplist
+hash| dict, ziplist
+zset| 跳跃表，ziplist
+
 ### 1. SDS （simple dynamic string）简单动态字符串
 ~~~
 struct sdshdr {
@@ -118,3 +128,41 @@ rehash操作：
 * ht[0] 和 ht[1] 指针交换，释放ht[1]
 
 渐进式rehash：分步骤rehash每一个索引的数据，同时涉及到的增删改操作在两个哈希表中进行。
+### 4. 跳跃表的设计，zset的实现
+采用跳跃表数据结构：多层跨度指针
+~~~
+typedef struct zskiplistNode {
+    struct zskiplistNode *backward; // 后退指针
+    double score; // 分数
+    robj *obj; // 取值
+    struct zskiplistLevel {
+        struct zskiplistNode *forward; // 下一个（前进指针）
+        unsigned int span; // 跨度
+    } level[];
+};
+
+typedef struct zskiplist {
+    struct zskiplistNode *head, *tail;
+    unsigned long lenth;
+    int level;
+};
+~~~
+### 5. 整数集合
+当一个set集合中的元素全为整数的时候,redis会以整数集合来保存：
+数组元素的升级操作灵活的升级元素编码，节约内存
+~~~
+typedef struct intset {
+    uint32_t encoding; // 编码方式
+    uint32_t length;
+    int8_t contents[]; // 整数数组
+};
+~~~
+### 6. 压缩列表
+当一个列表键只包含少量（数据元素也是比较短小的）的列表，就会使用压缩列表来保存这些元素。
+同时短小的hash键和zset键也会有所涉及
+~~~
+数据结构：
+zlbytes zltail zlllen entry1 entry2 entry3 ... zlend
+~~~
+当保存到的hash键的键值对都比较短小的时候以ziplist保存，
+奇数位置保存key，紧挨靠后的保存value
