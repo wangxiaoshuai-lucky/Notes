@@ -1,6 +1,6 @@
 ## 多线程、锁
 ### Thread.join方法
-~~~
+~~~ Java
 Thread A = new MyThread();
 A.start();
 A.join();
