@@ -8,6 +8,9 @@
 ### redis持久化（RDB、AOF）
 * RDB：把当前内存中的数据集快照写入磁盘，也就是 Snapshot 快照（数据库中所有键值对数据）。恢复时是将快照文件直接读到内存里。
 * AOF：redis会将每一个收到的写命令都通过write函数追加到文件中(默认是 appendonly.aof)，当redis重启时会通过重新执行文件中保存的写命令来在内存中重建整个数据库的内容。
+### redis内存回收机制：
+* 引用计数法：回收引用数量为0的内存区域
+* LRU：最久未使用的键优先回收
 ### zset的数据结构
 跳跃表实现
 ### setnx实现分布式锁
@@ -166,3 +169,15 @@ zlbytes zltail zlllen entry1 entry2 entry3 ... zlend
 ~~~
 当保存到的hash键的键值对都比较短小的时候以ziplist保存，
 奇数位置保存key，紧挨靠后的保存value
+### 7. 对象
+在redis的key->value中，key为字符串类型，value为redisObject对象：
+~~~ c
+typedef struct redisObject {
+    unsigned type; // 类型
+    unsigned encoding; // 底层编码格式
+    void *ptr; // 目标对象的指针
+    ....
+    int refcount; // 引用次数
+    int lru; // key最后被访问的时间，用于内存回收
+};
+~~~

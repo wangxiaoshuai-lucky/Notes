@@ -106,6 +106,7 @@
 ## [redis](./docs/redis/redis.md)
 * 5中数据结构(string, list, set, hash, zset)
 * redis持久化（RDB、AOF）
+* redis内存回收机制
 * zset的数据结构
 * setnx实现分布式锁
 * 相邻运行（不保证原子性）
