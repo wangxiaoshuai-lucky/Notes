@@ -61,7 +61,7 @@ hash| dict, ziplist
 zset| 跳跃表，ziplist
 
 ### 1. SDS （simple dynamic string）简单动态字符串
-~~~
+~~~ c
 struct sdshdr {
     int len; // 字符长度
     int free; // 空闲长度
@@ -76,7 +76,7 @@ struct sdshdr {
 * 兼容C字符串函数
 ### 2. 链表设计
 数据结构：双向链表
-~~~
+~~~ c
 typedef struct listNode {
 	
 	void *value;
@@ -97,7 +97,7 @@ typedef struct node{
 ~~~
 ### 3. 字典设计
 设计和HashMap类似，一个entry的数组，采用链地址法解决hash冲突
-~~~
+~~~ c
 typedef struct dictEntry {
     void *keyl
     
@@ -130,7 +130,7 @@ rehash操作：
 渐进式rehash：分步骤rehash每一个索引的数据，同时涉及到的增删改操作在两个哈希表中进行。
 ### 4. 跳跃表的设计，zset的实现
 采用跳跃表数据结构：多层跨度指针
-~~~
+~~~ c
 typedef struct zskiplistNode {
     struct zskiplistNode *backward; // 后退指针
     double score; // 分数
@@ -150,7 +150,7 @@ typedef struct zskiplist {
 ### 5. 整数集合
 当一个set集合中的元素全为整数的时候,redis会以整数集合来保存：
 数组元素的升级操作灵活的升级元素编码，节约内存
-~~~
+~~~ c
 typedef struct intset {
     uint32_t encoding; // 编码方式
     uint32_t length;
