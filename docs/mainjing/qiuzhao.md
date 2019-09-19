@@ -51,3 +51,19 @@
 * 算法 查重（剑指offer第一题）
 * set的get复杂度
 * 问问题：如果解决高并发
+
+## 阿里
+一面：9月19号 50分钟
+* 实习项目
+* 单点统一登录的流程
+* 有10个文件，多线程读取出来求和，怎么做
+* 一个很大的文本文件，存放ID-描述，快速定位：hash成小文件，然后再查找
+* synchronized和Lock
+* 可重入锁的概念
+* cookies和session的区别
+* filter用的是什么设计模式：装饰器模式
+* servlet的生命周期
+* mysql的隔离级别
+* mysql行锁和表锁
+* Integer a = 10 和 Integer b = 10，然后a是否等于b
+* sleep和wait的区别
