@@ -1,4 +1,4 @@
-package cn.wzy.bishi.tencent;
+package cn.wzy.bishi.tencent.time1;
 
 import java.util.Scanner;
 
