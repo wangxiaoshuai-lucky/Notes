@@ -181,3 +181,20 @@ typedef struct redisObject {
     int lru; // key最后被访问的时间，用于内存回收
 };
 ~~~
+### 8. 数据库服务Server
+一个redis服务器中含多个数据库，结构为：
+~~~ c
+struct redisServer{
+    redisDb **db; // 数据库数组
+    int dbnum; // 数据库个数
+};
+~~~
+### 9. 数据库DB
+数据库中包含有所有的键值对以及所有的过期时间
+~~~ c
+struct redisDb{
+    dict *dict; // 字典包含所有的键值对
+    ...
+    dict *dict; // 所有键的过期时间
+};
+~~~
