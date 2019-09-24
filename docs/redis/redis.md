@@ -206,3 +206,29 @@ struct redisDb{
 * RDB：将数据库数据保存到RDB文件中的时候，程序会对数据库中的键进行检查，如果过期将不会保存到文件中
 * AOF：在数据库删除一个过期键的时候，会在AOF文件中追加一条DEL命令
 * 主从复制：从服务器不会删除过期键，主服务器在删除一个过期键的时候，向所有从服务器发送DEL命令执行删除操作
+### 10. 数据库持久化
+* RDB：生成数据库快照文件
+* AOF：将每一个数据库命令追加到AOF文件中
+
+载入优先级：AOF > RDB
+### 10.1 RDB持久化
+redis启动的时候会加载RDB文件，有两个命令能生成RDB文件：SAVE和BGSAVE
+* SAVE会阻塞服务器进程，期间不能处理任何的请求，相当于redis的一个命令，单线程处理，等到处理完之后才接收后面的请求
+* BGSAVE会派生出一个子进程，然后由子进程负责创建RDB文件，主进程继续处理命令请求
+
+自动间隔性保存配置：服务器每隔100ms会检测一次这些条件，如果满足就执行save  
+* save 500 1：在500s内发生至少1次修改就保存一次
+~~~ c
+struct redisServer{
+    redisDb **db; // 数据库数组
+    int dbnum; // 数据库个数
+    saveparam *saveparams; // 数据库的保存设置
+    long long dirty; // 修改计数器
+    time_t lastsace; // 上次save时间
+};
+
+struct saveparam {
+    time_t second; // 间隔时间
+    int changes; // 修改次数
+};
+~~~
