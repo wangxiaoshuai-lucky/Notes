@@ -232,3 +232,21 @@ struct saveparam {
     int changes; // 修改次数
 };
 ~~~
+RDB文件格式:REDIS字符串 + 版本号（006）+ 数据库数据 + 结束标志 + 检验和
+~~~
+REDIS | version | databases | EOF | check_num
+~~~
+例如：
+~~~
+REDIS | 006 | select| 0 | expiretime_ms | 155ms | string | "username" | "wagzy" | EOF | 500505515
+~~~
+### 10.2 AOF持久化
+####持久化过程
+服务器将所有客户端的写命令都拼接到AOF文件中：客户端写 => REDIS服务器 => AOF文件  
+#### 还原过程
+启动redis服务，创建一个伪客户端，依次执行AOF文件中的写命令
+#### AOF重写
+原因：redis运行过程中会不断追加写命令到AOF中，导致AOF文件内存体积越来越大，所以需要对AOF文件进行重写，减少一些冗余命令，使体积减小  
+重写过程：创建新的AOF文件，遍历数据库中的所有键值对，生成对应的set语句，追加到新AOF文件中  
+***后台AOF重写*** ： fork一个子进程，子进程含有所有父进程的数据副本，但是期间父进程会接受新的写命令，造成数据不一致，
+redis在父进程接受新命令的时候，追加到AOF文件中的同时也追加到重写AOF缓冲区，最后将重写AOF缓冲区的数据和新AOF文件汇总
