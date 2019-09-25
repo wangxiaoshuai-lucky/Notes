@@ -241,7 +241,8 @@ REDIS | version | databases | EOF | check_num
 REDIS | 006 | select| 0 | expiretime_ms | 155ms | string | "username" | "wagzy" | EOF | 500505515
 ~~~
 ### 10.2 AOF持久化
-####持久化过程
+
+#### 持久化过程
 服务器将所有客户端的写命令都拼接到AOF文件中：客户端写 => REDIS服务器 => AOF文件  
 #### 还原过程
 启动redis服务，创建一个伪客户端，依次执行AOF文件中的写命令
