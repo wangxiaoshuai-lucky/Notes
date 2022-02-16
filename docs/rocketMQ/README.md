@@ -219,7 +219,7 @@ index条目的最后部分存储的是上一个关系的index下标，比如一�
 
 #### 初始化
 
-* 构建主题订阅信息
+* 构建主题订阅信息(包括重试主题)
 * 初始化MQClientInstance、RebalanceImpl（消息重新负载均衡）
 * 初始化消息消费进度
     * 集群模式：消息进度保存到broker上
@@ -256,5 +256,10 @@ index条目的最后部分存储的是上一个关系的index下标，比如一�
 * proxy 接收到延迟消息，存储到 rocketsDB(k-v数据库) 中，按照消费时间正序
 * 轮训 rocketsDB ，将到期消息重新投递到真实 topic 中
 
-#### 消息重试
-todo 
+#### 消息重试 ACK 机制
+
+* 监听消息返回
+* 如果为 re_consume_later，则将消息发送到 broker 的延迟 topic 下，根据重试次数，加入延迟队列
+* 原消费进度更新掉
+* 延迟消息到期后，再次投放到 commitLog，topic 为 retry_topic
+* 消费者启动的时候会同时监听 target_topic 和 retry_target_topic
