@@ -181,6 +181,7 @@
     * 死锁避免
 * 虚拟内存
 * 内存置换算法
+* select、poll、epoll 对比
 ## [linux常用命令](./docs/Linux/README.md)
 * grep命令：查询文本
 * ps -ef|grep :查进程
@@ -198,6 +199,7 @@
 * 动态规划
 * 贪心算法
 * 排序算法
+* 雪花算法
 ## [web安全](./docs/web_security/README.md)
 * CSRF 跨站请求伪造
 * XSS
