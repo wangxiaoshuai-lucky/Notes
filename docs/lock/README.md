@@ -213,6 +213,12 @@ take和push为阻塞方法！
 
 每个线程获取lock让当前屏障的值减一，当为零唤醒所有线程继续往下（获得锁，释放锁）， 否则wait阻塞起来等待被唤醒。
 
-### future
+### FutureTask
 
-todo
+实现原理：
+
+* run 方法运行目标 Callable
+* get 方法获取 outcome，如果有则返回，如果没有则阻塞等待
+    * 阻塞等待加入到等待队列，park 当前线程
+* set 保存 outcome，唤醒所有等待队列
+    * get 方法继续获取 outcome

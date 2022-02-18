@@ -1,17 +1,19 @@
-# Java后台-基础知识点整理  
+# Java后台-基础知识点整理
+
 ## [Java基础](./docs/java/README.md)
-* 内存泄露、内存溢出 
+
+* 内存泄露、内存溢出
 * 函数重载、重写
 * 什么是泛型？
 * Java中是否可以覆盖(override)一个private或者是static的方法？
 * 定义一个空参数的构造方法的作用
-* 集合容器以及底层实现原理 
-* 哪些是线程安全的集合 
-* String类 
+* 集合容器以及底层实现原理
+* 哪些是线程安全的集合
+* String类
 * 初始化顺序的执行顺序
-* 接口和类的理解  
-* 反射机制和内省机制  
-* java的序列化  
+* 接口和类的理解
+* 反射机制和内省机制
+* java的序列化
 * 伪共享问题
 * Java 中的异常处理
 * 引用
@@ -19,7 +21,9 @@
 * 编译型语言与解释型语言
 * Comparator 和 Comparable接口
 * 死锁、活锁
+
 ## [JVM相关知识点](./docs/jvm/README.md)
+
 * JMM及8个原子操作
 * java对象存储模型
 * java内存结构及各个区域的作用
@@ -28,7 +32,7 @@
     * 新生代、老年代、永久代
 * 类加载机制
     * 各个阶段（7个阶段）的工作流程
-    * 双亲委派模式  
+    * 双亲委派模式
     * 类加载器
 * JVM GC算法和垃圾收集器
 * JVM设置参数
@@ -36,7 +40,9 @@
 * cpu占用高的排查方法
 * 堆栈的增长方式
 * 多态的实现原理
+
 ## [多线程、锁](./docs/lock/README.md)
+
 * Thread.join方法
 * ThreadLocal
 * 线程的状态
@@ -70,7 +76,10 @@
 * CountDownLatch闭锁(基于共享锁AQS)
 * Semaphore（基于共享锁AQS）
 * CyclicBarrier(lock实现)
+* FutureTask
+
 ## [ssm框架](./docs/framework/README.md)
+
 * spring-boot 启动解析
 * spring框架的理解
     * IOC和DI的原理和源码分析
@@ -85,8 +94,10 @@
 * Mybatis的理解
     * sql语句和方法的映射原理
     * \#｛｝ 和 \$｛｝的区别
-* 拦截器、过滤器  
+* 拦截器、过滤器
+
 ## [mysql（InnoDB）](./docs/mysql/README.md)
+
 * 数据库ACID
 * 事务的隔离级别
 * 事务的传播行为
@@ -103,7 +114,9 @@
 * 快照读和当前读
 * 主从同步
 * hash（散列）和b+树 对比
+
 ## [redis](./docs/redis/redis.md)
+
 * 5中数据结构(string, list, set, hash, zset)
 * redis持久化（RDB、AOF）
 * redis内存回收机制
@@ -114,7 +127,9 @@
 * 哨兵机制 sentinel
 * redis集群codis 大致实现原理
 * 《redis的设计与实现》读书笔记
+
 ## [zookeeper相关知识点](./docs/zookeeper/README.md)
+
 * 概述
 * 监听机制
 * 节点读写的原子性
@@ -122,8 +137,11 @@
 * 选举过程
 * zookeeper实现分布式锁
 * 分布式事务解决方案
+
 ## 消息队列
+
 ### [Kafka](./docs/kafka/README.md)
+
 * Kafka概述、功能、场景
     * 概述
     * 功能
@@ -132,7 +150,9 @@
 * 控制器Controller
 * ISR
 * 发送消息流程
+
 ### [rocketMQ](./docs/rocketMQ/README.md)
+
 * 运行模型（kafka大同小异）
 * 基本概念
 * 储存结构
@@ -145,13 +165,17 @@
     * 生产者Producer
         * 消息发送
     * 消息存储
+
 ## [高并发的相关部分](./docs/distribute/distribute.md)
+
 * 服务器降级
 * 缓存穿透
 * 缓存雪崩
 * 缓存击穿
 * 高并发常用解决方案
+
 ## [计算机网络](./docs/ComputerNet/README.md)
+
 * 冯诺依曼体系结构
 * OSI 7层模型
 * TCP 5层模型
@@ -169,7 +193,9 @@
 * UDP和TCP的区别
 * ping原理
 * TCP状态机
+
 ## [操作系统](./docs/operation_system/README.md)
+
 * 基本功能
 * 并发、并行
 * 内核态、用户态
@@ -182,7 +208,9 @@
 * 虚拟内存
 * 内存置换算法
 * select、poll、epoll 对比
+
 ## [linux常用命令](./docs/Linux/README.md)
+
 * grep命令：查询文本
 * ps -ef|grep :查进程
 * df -h /:查看磁盘使用情况
@@ -191,7 +219,9 @@
 * netstat -tunlp|grep ：查看端口占用情况
 * vim:V可视化模式，gg光标到首行，G到尾行
 * | 表示管道符：作用是把前面的 stdout 输出当作下一个命令的 stdin 数据
+
 ## [算法、数据结构](./docs/algorithm/algorithm.md)
+
 * B树
 * B+树
 * 二叉树
@@ -200,12 +230,16 @@
 * 贪心算法
 * 排序算法
 * 雪花算法
+
 ## [web安全](./docs/web_security/README.md)
+
 * CSRF 跨站请求伪造
 * XSS
 * SQL注入
 * 加密算法
+
 ## [设计模式](./docs/design_pattern/README.md)
+
 * 创建型模式
     * 工厂方法模式
     * 抽象工厂模式
@@ -232,14 +266,20 @@
     * 访问者模式
     * 中介者模式
     * 解释器模式
+
 ## 系统设计
+
 * 权限系统设计 RBAC ABAC
+
 ## [春招面经](docs/mainjing/chunzhao.md)
+
 * 腾讯提前批（后端开发）-三面挂
 * 腾讯提前批（运营开发-被捞起来）-两面挂
 * 阿里-支付宝-四面（三技术+一HR）-offer报批挂
 * 头条 - 一面挂
+
 ## [秋招面经](docs/mainjing/qiuzhao.md)
+
 * 头条 - offer
 * 美团一面
 * 美团二面
