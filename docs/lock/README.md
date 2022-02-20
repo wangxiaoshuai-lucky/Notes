@@ -143,13 +143,16 @@ public final synchronized void join(long millis) throws InterruptedException {
 重量级锁：对应于操作系统的mutex互斥锁
 
 * 对象头信息中有关标志位
+* 偏向锁：只有一个线程多次获得同一个锁时，无需加锁，直接返回
+* 轻量级锁：cas 自旋尝试加锁
+* 重量级锁：操作系统 Mutex 阻塞加锁
 * 锁升级过程
     * 偏向锁01 =\> 轻量级锁00
     * 轻量级锁00 =\> 重量级锁10
 
 ### synchronized锁的底层原理
 
-特点：可重入性、不可中断性
+特点：可重入性、不可中断性 锁住 mark word
 
 ### AQS的实现原理
 
