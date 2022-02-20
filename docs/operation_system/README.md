@@ -86,3 +86,34 @@
 * 先进先出算法（FIFO）：最先来的最先被替换出去
 
 ### select、poll、epoll 对比
+
+IO:
+
+* 阻塞IO
+* 非阻塞IO
+* 多路复用IO：基于select、poll、epoll实现
+
+select:
+一个线程监听所有所有 Socket 句柄(fd_set)，轮训句柄，如果有句柄有数据就会返回，需要轮训 fd_set 检查哪条 fd 数据 ok。
+
+~~~ c
+int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+~~~
+
+poll:
+流程和 select 类似，参数不一致，无数量限制
+
+~~~ c
+int poll (struct pollfd *fds, unsigned int nfds, int timeout);
+~~~
+
+select和poll都需要在返回后，通过遍历文件描述符来获取已经就绪的socket。事实上，同时连接的大量客户端在一时刻可能只有很少的处于就绪状态，因此随着监视的描述符数量的增长，其效率也会线性下降。
+
+epoll:
+epoll通过注册监听 fd，当 fd 就绪迅速激活这个文件描述符，当进程调用 epoll_wait() 时便得到通知则返回.
+
+~~~
+int epoll_create(int size)；//创建一个epoll的句柄，size用来告诉内核这个监听的数目一共有多大
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；// 注册
+int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);// 阻塞监听
+~~~
