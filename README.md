@@ -230,6 +230,11 @@
 * 贪心算法
 * 排序算法
 * 雪花算法
+* 单源最短路径 - dijkstra
+* 多源最短路径 - floyd
+* 最小生成树
+    * prim 算法
+    * Kruskal 算法
 
 ## [web安全](./docs/web_security/README.md)
 

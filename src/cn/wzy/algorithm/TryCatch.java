@@ -1,17 +1,24 @@
 package cn.wzy.algorithm;
 
 public class TryCatch {
-	public static void main(String[] args) {
-		System.out.println(f());
-	}
+    public static void main(String[] args) {
+        System.out.println(f().age);
+    }
 
-	static int f(){
-		int a = 5;
-		try {
-			a = 15;
-			return a;
-		} finally {
-			a++;
-		}
-	}
+    static class User {
+        Integer age;
+    }
+
+    private static User f() {
+        User a = new User();
+        a.age = 1;
+        try {
+            a.age = 15;
+            System.out.println("try" + a.age);
+            return a;
+        } finally {
+            a.age++;
+            System.out.println("finally" + a);
+        }
+    }
 }
